@@ -12,14 +12,18 @@ import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+/*
+ * @Data annotation hold the properties of :
+ * @Getters, @Setters and @RequiredArgsConstructor
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "customer")
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // this annotation is used to define the primary key for specific table
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // this annotation is used to auto generate the value identically
     int id;
 
 //    @Size annotation is used to restrict the min or max limit
@@ -40,13 +44,18 @@ public class Customer {
 
     @Enumerated(EnumType.STRING)
     Gender gender;
-//    cardinal relationship
-//    customer is the parent for cart entity
+    /**
+     * cardinal relationship
+     * each customer can have only one cart so this will be one-to-one relationship
+     * customer is the parent for cart entity
+     */
     @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
     Cart cart; // cart is assigned to a customer
 
-//    one customer can have many orders so this will be one to many relationship
-//    here also customer is the parent for order entities
+    /**
+     * one customer can have multiple orders so this will be one-to-many relationship
+     * here also customer is the parent for order entities
+     */
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     List<OrderEntity> orderEntities = new ArrayList<>();
 
