@@ -22,10 +22,7 @@ public class RestaurantTransformer {
                 .build();
     }
     public static RestaurantResponse restaurantToRestaurantResponse(Restaurant restaurant){
-        List<MenuResponse>menu = restaurant.getAvailableMenuItems()
-                .stream()
-                .map(menuItem -> MenuItemTransformer.menuItemToMenuResponse(menuItem))
-                .collect(Collectors.toList());
+        List<MenuResponse> menu = getMenuOfRestaurant(restaurant);
         return RestaurantResponse.builder()
                 .name(restaurant.getName())
                 .location(restaurant.getLocation())
@@ -34,5 +31,12 @@ public class RestaurantTransformer {
                 .location(restaurant.getLocation())
                 .opened(restaurant.isOpened())
                 .build();
+    }
+    public static List<MenuResponse> getMenuOfRestaurant(Restaurant restaurant){
+        List<MenuResponse>menu = restaurant.getAvailableMenuItems()
+                .stream()
+                .map(menuItem -> MenuItemTransformer.menuItemToMenuResponse(menuItem))
+                .collect(Collectors.toList());
+        return menu;
     }
 }
