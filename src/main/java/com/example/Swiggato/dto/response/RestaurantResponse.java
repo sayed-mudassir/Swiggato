@@ -3,7 +3,6 @@ package com.example.Swiggato.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,8 +10,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartResponse {
-    double cartTotal;
+public class RestaurantResponse {
+    String name;
 
-    List<FoodResponse> foodItems = new ArrayList<>();
+    String location;
+
+    String contactNum;
+
+    List<MenuResponse> menu;
+
+    boolean opened;
 }

@@ -23,7 +23,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // this annotation is used to auto generate the value identically
     int id;
 
-    int cardTotal;
+    double cardTotal;
 
     /**
      * cardinal relationship
@@ -36,7 +36,7 @@ public class Cart {
 
     /**
      * each cart can hold multiple food items so this will be one-to-many relationship
-     * here cart is the parent for foodItems entities
+     * here cart is the parent for menuItems entities
      */
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
     List<FoodItem> foodItems = new ArrayList<>();

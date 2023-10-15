@@ -33,7 +33,7 @@ public class Restaurant {
 
     @Column(unique = true,nullable = false)
     @Size(min = 10,max = 10) //@Size annotation is used to restrict the min or max limit
-    String contactNum;
+    String contactNo;
 
     @Enumerated(EnumType.STRING)
     RestaurantCategory restaurantCategory;
@@ -51,5 +51,6 @@ public class Restaurant {
      * so the relationship will be same
      */
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
-    List<FoodItem> availableFoodItems = new ArrayList<>();
+    List<MenuItem> availableMenuItems = new ArrayList<>();
+
 }

@@ -28,7 +28,7 @@ public class DeliveryPartner {
     String name;
 
     @Size(min = 10,max = 10)
-    String mobileNum;
+    String mobileNo;
 
     @Enumerated(EnumType.STRING)
     Gender gender;
