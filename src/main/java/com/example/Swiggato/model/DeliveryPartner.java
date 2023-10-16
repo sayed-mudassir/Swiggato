@@ -28,6 +28,7 @@ public class DeliveryPartner {
     String name;
 
     @Size(min = 10,max = 10)
+    @Column(unique = true,nullable = false)
     String mobileNo;
 
     @Enumerated(EnumType.STRING)
