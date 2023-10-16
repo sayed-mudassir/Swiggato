@@ -14,7 +14,11 @@ public class FoodResponse {
 
     double price;
 
-    FoodCategory foodCategory;
+    FoodCategory category;
 
     boolean veg;
+
+    int quantityAdded;
+
+    String restaurantName;
 }
