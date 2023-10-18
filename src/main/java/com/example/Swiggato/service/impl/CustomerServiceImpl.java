@@ -12,6 +12,8 @@ import com.example.Swiggato.transformer.CustomerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 /**
@@ -40,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
         Cart cart = Cart.builder()
                 .cardTotal(0)
                 .customer(customer)
+                .foodItems(new ArrayList<>())
                 .build();
         customer.setCart(cart);
         Customer savedCustomer = customerRepository.save(customer);

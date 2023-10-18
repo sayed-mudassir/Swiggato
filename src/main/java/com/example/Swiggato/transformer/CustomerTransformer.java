@@ -9,18 +9,18 @@ public class CustomerTransformer {
     public static Customer customerRequestToCustomer(CustomerRequest customerRequest){
         return Customer.builder()
                 .name(customerRequest.getName())
-                .gender(customerRequest.getGender())
+                .email(customerRequest.getEmail())
                 .address(customerRequest.getAddress())
                 .mobileNo(customerRequest.getMobileNo())
-                .email(customerRequest.getEmail())
+                .gender(customerRequest.getGender())
                 .build();
     }
     public static CustomerResponse customerToCustomerResponse(Customer customer){
         CartResponse cartResponse = CartTransformer.cartToCartResponse(customer.getCart());
         return CustomerResponse.builder()
                 .name(customer.getName())
-                .mobileNo(customer.getMobileNo())
                 .address(customer.getAddress())
+                .mobileNo(customer.getMobileNo())
                 .cartResponse(cartResponse)
                 .build();
     }

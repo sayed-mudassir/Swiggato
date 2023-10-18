@@ -64,10 +64,10 @@ public class CartServiceImpl implements CartService {
         Cart cart = customer.getCart();
 //        save the food item
         FoodItem savedFoodItem = foodRepository.save(foodItem);
-//        add food item to cart
-        cart.getFoodItems().add(savedFoodItem);
 //        calculate the cart total
         double cartTotal = 0;
+        //        add food item to cart
+        cart.getFoodItems().add(savedFoodItem);
         for(FoodItem foodItem1 : cart.getFoodItems())
             cartTotal += foodItem1.getRequiredQuantity()*foodItem1.getMenuItem().getPrice();
         savedFoodItem.setCart(cart);//set cart for food item
@@ -77,7 +77,7 @@ public class CartServiceImpl implements CartService {
         Cart savedCart = cartRepository.save(cart);
         MenuItem savedMenuItem = menuRepository.save(menuItem);
 //        prepare cart response return response
-        return CartTransformer.cartToCartStatusResponse(cart);
+        return CartTransformer.cartToCartStatusResponse(savedCart);
 
     }
 }
