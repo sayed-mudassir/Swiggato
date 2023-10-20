@@ -12,6 +12,8 @@ import com.example.Swiggato.service.OrderService;
 import com.example.Swiggato.transformer.OrderEntityTransformer;
 import com.example.Swiggato.utils.validationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,17 +25,20 @@ public class OrderServiceImpl implements OrderService {
     final OrderRepository orderRepository;
     final DeliveryPartnerRepository deliveryPartnerRepository;
     final RestaurantRepository restaurantRepository;
+    final JavaMailSender javaMailSender;
     @Autowired
     public OrderServiceImpl(com.example.Swiggato.utils.validationUtils validationUtils,
                             CustomerRepository customerRepository,
                             OrderRepository orderRepository,
                             DeliveryPartnerRepository deliveryPartnerRepository,
-                            RestaurantRepository restaurantRepository) {
+                            RestaurantRepository restaurantRepository,
+                            JavaMailSender javaMailSender) {
         this.validationUtils = validationUtils;
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.deliveryPartnerRepository = deliveryPartnerRepository;
         this.restaurantRepository = restaurantRepository;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
@@ -78,6 +83,21 @@ public class OrderServiceImpl implements OrderService {
         customerRepository.save(customer);
         deliveryPartnerRepository.save(deliveryPartner);
         restaurantRepository.save(restaurant);
+//        prepare email content
+        String text = "Thank you "+ customer.getName()+" for ordering form Swiggato"+"\n\n"
+                +"your order is prepared by "+restaurant.getName()+"\n"
+                +"Your order will be delivered quickly to your given address."
+                +customer.getAddress()+"\n"
+                +"Total amount : " +orderEntity.getOrderTotal()+"\n"
+                +"contact your delivery person "+deliveryPartner.getMobileNo();
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("spirngaccio@gmail.com");
+        simpleMailMessage.setTo(customer.getEmail());
+        simpleMailMessage.setSubject("Order Placed !!!");
+        simpleMailMessage.setText(text);
+
+//        send mail
+        javaMailSender.send(simpleMailMessage);
 //        prepare response and return
         return OrderEntityTransformer.orderEntityToOrderResponse(savedOrderEntity);
     }
